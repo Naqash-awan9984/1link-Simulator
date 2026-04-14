@@ -92,7 +92,7 @@ def _load_delay_config():
                     base["delaySeconds"] = float(source.get("delaySeconds"))
                 except Exception:
                     pass
-            if "successResponsesBeforeDelay" in source:
+            if "successResponsesBeforeDelay" in source: 
                 try:
                     base["successResponsesBeforeDelay"] = int(source.get("successResponsesBeforeDelay"))
                 except Exception:
