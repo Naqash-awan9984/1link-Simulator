@@ -101,7 +101,7 @@ def _load_delay_config():
                 try:
                     base["delayCountBeforeSuccess"] = int(source.get("delayCountBeforeSuccess"))
                 except Exception:
-                    pass
+                    pass 
         return base
 
     def _normalized_config(raw):
