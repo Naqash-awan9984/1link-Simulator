@@ -1,0 +1,32 @@
+{
+  "default": {
+    "enabled": false,
+    "delaySeconds": 40,
+    "successResponsesBeforeDelay": 0,
+    "delayCountBeforeSuccess": 0
+  },
+  "oauth": {
+    "enabled": false,
+    "delaySeconds": 40,
+    "successResponsesBeforeDelay": 0,
+    "delayCountBeforeSuccess": 0
+  },
+  "fetch": {
+    "enabled": false,
+    "delaySeconds": 40,
+    "successResponsesBeforeDelay": 0,
+    "delayCountBeforeSuccess": 0
+  },
+  "ibft": {
+    "enabled": true,
+    "delaySeconds": 200,
+    "successResponsesBeforeDelay": 0,
+    "delayCountBeforeSuccess": 3
+  },
+  "mpayTrace": {
+    "enabled": false,
+    "delaySeconds": 40,
+    "successResponsesBeforeDelay": 0,
+    "delayCountBeforeSuccess": 0
+  }
+}

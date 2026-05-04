@@ -1,0 +1,227 @@
+{
+  "info": {
+    "name": "1LINK Simulator APIs",
+    "_postman_id": "8f0d9d1d-2365-4f59-9f9d-b6df6f39b101",
+    "description": "Postman collection for 1LINK simulator including OAuth token generation and all protected APIs.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "01 - OAuth2 Token",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/x-www-form-urlencoded"
+          }
+        ],
+        "body": {
+          "mode": "urlencoded",
+          "urlencoded": [
+            {
+              "key": "grant_type",
+              "value": "{{grant_type}}",
+              "type": "text"
+            },
+            {
+              "key": "client_id",
+              "value": "{{client_id}}",
+              "type": "text"
+            },
+            {
+              "key": "client_secret",
+              "value": "{{client_secret}}",
+              "type": "text"
+            },
+            {
+              "key": "scope",
+              "value": "{{scope}}",
+              "type": "text"
+            }
+          ]
+        },
+        "url": {
+          "raw": "{{base_url}}/oauth2/token",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "oauth2",
+            "token"
+          ]
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('Token generated', function () {",
+              "  pm.response.to.have.status(200);",
+              "});",
+              "var data = pm.response.json();",
+              "if (data && data.access_token) {",
+              "  pm.collectionVariables.set('access_token', data.access_token);",
+              "}"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "02 - Fetch Title API",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{access_token}}"
+          },
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"ToBankIMD\": \"62787300000\",\n  \"AccountNumberTo\": \"PK66CRSM0000003012727839\",\n  \"TransmissionDateAndTime\": \"0410110753\",\n  \"STAN\": \"300446\",\n  \"Time\": \"110753\",\n  \"Date\": \"0410\",\n  \"RRN\": \"101107534436\"\n}"
+        },
+        "url": {
+          "raw": "{{base_url}}/onelink/production/path-1",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "onelink",
+            "production",
+            "path-1"
+          ]
+        }
+      }
+    },
+    {
+      "name": "03 - IBFT Funds Transfer (Production Path)",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{access_token}}"
+          },
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"Amount\": \"000000000100\",\n  \"TransmissionDateAndTime\": \"0410110753\",\n  \"STAN\": \"300446\",\n  \"Time\": \"110753\",\n  \"Date\": \"0410\",\n  \"RRN\": \"101107534436\",\n  \"ToBankIMD\": \"998932     \",\n  \"AccountNumberTo\": \"PK66CRSM0000003012727839\"\n}"
+        },
+        "url": {
+          "raw": "{{base_url}}/onelink/production/funds-transfer-rest-service/path-1",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "onelink",
+            "production",
+            "funds-transfer-rest-service",
+            "path-1"
+          ]
+        }
+      }
+    },
+    {
+      "name": "04 - IBFT Funds Transfer (Certification Path)",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{access_token}}"
+          },
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"Amount\": \"000000000100\",\n  \"TransmissionDateAndTime\": \"0410110753\",\n  \"STAN\": \"300446\",\n  \"Time\": \"110753\",\n  \"Date\": \"0410\",\n  \"RRN\": \"101107534436\",\n  \"ToBankIMD\": \"998932     \",\n  \"AccountNumberTo\": \"PK66CRSM0000003012727839\"\n}"
+        },
+        "url": {
+          "raw": "{{base_url}}/uat-1link/link-certification/funds-transfer-rest-service/path-1",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "uat-1link",
+            "link-certification",
+            "funds-transfer-rest-service",
+            "path-1"
+          ]
+        }
+      }
+    },
+    {
+      "name": "05 - MPAY Trace IBFT",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{access_token}}"
+          },
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"ostan\": \"300446\",\n  \"orrn\": \"101107534436\"\n}"
+        },
+        "url": {
+          "raw": "{{base_url}}/one-link/mpay/trace/IBFT",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "one-link",
+            "mpay",
+            "trace",
+            "IBFT"
+          ]
+        }
+      }
+    }
+  ],
+  "variable": [
+    {
+      "key": "base_url",
+      "value": "http://127.0.0.1:2011"
+    },
+    {
+      "key": "grant_type",
+      "value": "client_credentials"
+    },
+    {
+      "key": "client_id",
+      "value": "c5a6f9d1895646dc83f4209eb2c8d770"
+    },
+    {
+      "key": "client_secret",
+      "value": "yO1lN5iF5jS4qY2lD8wW5hY3mS2wA0gT7fC7hM4qA7nX3sB5wK"
+    },
+    {
+      "key": "scope",
+      "value": "1LinkApi"
+    },
+    {
+      "key": "access_token",
+      "value": ""
+    }
+  ]
+}
